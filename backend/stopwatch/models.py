@@ -1,13 +1,11 @@
+from datetime import datetime
 from django.db import models
 from django_extensions.db.models import TimeStampedModel
 from django.utils.translation import ugettext_lazy as _
 
 class StopwatchLog(TimeStampedModel):
-    timestamp = models.CharField(
+    timestamp = models.DateTimeField(
         verbose_name=_('TimeStamp'),
-        max_length=30,
-        blank=True,
-        null=True
     )
 
     log_type = models.CharField(
@@ -19,3 +17,6 @@ class StopwatchLog(TimeStampedModel):
 
     class Meta:
         ordering = ('-id', )
+    
+    def get_formatted_timestamp(self):
+        return datetime.strftime(self.timestamp, "%Y-%m-%d %H:%I:%S")
